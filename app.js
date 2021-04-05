@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -11,8 +12,28 @@ app.use(helmet());
 // handle CORS Error
 app.use(cors());
 
-// LOGGER
-app.use(morgan("tiny"));
+// MongoDB Connection Setup
+const mongoose = require("mongoose");
+
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+});
+
+if (process.env.NODE_ENV !== "production") {
+  const mDb = mongoose.connection;
+  mDb.on("open", () => {
+    console.log("mongoDB is connected successfully");
+  });
+  mDb.on("error", (error) => {
+    console.log(error);
+  });
+
+  // LOGGER
+  app.use(morgan("tiny"));
+}
 
 // set body Parser
 app.use(
@@ -35,14 +56,14 @@ app.use("/v1/ticket", ticketRouter);
 // HANDLE error
 const handleError = require("./src/utils/handleError");
 
-app.use("*", (req, res, next) => {
+app.use((req, res, next) => {
   const error = new Error("Resources is not found!!!");
   error.status = 404;
 
   next(error);
 });
 
-app.use("*", (error, req, res, next) => {
+app.use((error, req, res, next) => {
   handleError(error, res);
 });
 
