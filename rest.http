@@ -1,0 +1,24 @@
+### User sign up end point
+POST http://127.0.0.1:3001/v1/user 
+Content-Type: application/json
+
+
+{
+    "name": "Duc Huy",
+    "company": "Hoa Sen",
+    "address" : "quang trung",
+    "phone" : "111222333",
+    "email" : "user3@gmail.com",
+    "password" : "hsu123456"
+}
+
+
+### User sign in end point
+POST http://127.0.0.1:3001/v1/user/login
+Content-Type: application/json
+
+
+{
+    "email" : "user3@gmail.comm",
+    "password" : "hsu123456"
+}
