@@ -1,5 +1,5 @@
 ### User sign up end point
-POST http://127.0.0.1:3001/v1/user 
+POST http://127.0.0.1/v1/user 
 Content-Type: application/json
 
 
@@ -14,11 +14,11 @@ Content-Type: application/json
 
 
 ### User sign in end point
-POST http://127.0.0.1:3001/v1/user/login
+POST http://127.0.0.1/v1/user/login
 Content-Type: application/json
 
 
 {
-    "email" : "user3@gmail.comm",
+    "email" : "user3@gmail.com",
     "password" : "hsu123456"
 }

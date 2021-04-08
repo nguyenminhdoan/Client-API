@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { insertUser, getUserByEmail } = require("../../model/user/User.model");
+const {
+  createAccessJWT,
+  createRefreshJWT,
+} = require("../../helpers/jwt.helper");
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -8,6 +12,7 @@ const {
   hashPassword,
   comparePassword,
 } = require("../../helpers/bcrypt.helper");
+const { json } = require("body-parser");
 
 router.all("/", (req, res, next) => {
   // res.json({
@@ -50,6 +55,7 @@ router.post("/", async (req, res, next) => {
 router.post("/login", async (req, res) => {
   // console.log(req.body);
   const { email, password } = req.body;
+  // console.log(email, password);
 
   if (!email || !password)
     return res.json({
@@ -68,11 +74,22 @@ router.post("/login", async (req, res) => {
       message: "Invalid email or password",
     });
   const result = await comparePassword(password, passFromDb);
-  console.log(result);
+
+  // console.log(result);
+  if (!result)
+    return res.json({
+      status: "failed",
+      message: "Invalid email or password",
+    });
+
+  const accessJWT = await createAccessJWT(user.email, `${user._id}`);
+  const refreshJWT = await createRefreshJWT(user.email, `${user._id}`);
 
   res.json({
     status: "success",
     message: "Login Successfully",
+    accessJWT,
+    refreshJWT,
   });
 });
 
