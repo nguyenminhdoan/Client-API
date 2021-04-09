@@ -22,3 +22,11 @@ Content-Type: application/json
     "email" : "user3@gmail.com",
     "password" : "hsu123456"
 }
+### User user profile endpoint
+GET http://127.0.0.1/v1/user/login
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTYxNzk3ODIzMywiZXhwIjoxNjE3OTc5MTMzfQ.S0HXReCcFsDf5en-Q1BN-M2KfsE4AqTifvNgFvdacC8
+
+{
+    "email" : "user3@gmail.com",
+    "password" : "hsu123456"
+}

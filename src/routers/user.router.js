@@ -1,10 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const { insertUser, getUserByEmail } = require("../../model/user/User.model");
+const {
+  insertUser,
+  getUserByEmail,
+  getUserById,
+} = require("../../model/user/User.model");
 const {
   createAccessJWT,
   createRefreshJWT,
 } = require("../../helpers/jwt.helper");
+const {
+  userAuthorization,
+} = require("../../middlewares/authorization.middleware");
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -21,6 +28,13 @@ router.all("/", (req, res, next) => {
   next();
 });
 
+// Get user profile router
+router.get("/", userAuthorization, async (req, res) => {
+  const _id = req.userId;
+  const userProfile = await getUserById(_id);
+
+  res.json({ user: userProfile });
+});
 // Create new user route
 router.post("/", async (req, res, next) => {
   const { name, company, address, phone, email, password } = req.body;

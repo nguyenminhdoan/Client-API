@@ -18,7 +18,7 @@ const setJWT = function (key, value) {
 const getJWT = function (key) {
   return new Promise((resolve, reject) => {
     try {
-      client.set(key, (err, res) => {
+      client.get(key, (err, res) => {
         if (err) reject(err);
         resolve(res);
       });
