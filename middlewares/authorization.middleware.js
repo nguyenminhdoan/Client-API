@@ -1,5 +1,5 @@
 const { verifyAccessJWT } = require("../helpers/jwt.helper");
-const { getJWT } = require("../helpers/redis.helper");
+const { getJWT, deleteJWT } = require("../helpers/redis.helper");
 
 const userAuthorization = async (req, res, next) => {
   const { authorization } = req.headers;
@@ -17,6 +17,8 @@ const userAuthorization = async (req, res, next) => {
     req.userId = userId;
     return next();
   }
+  deleteJWT(authorization);
+
   // 2) check if is exist in redis
   // 3) extract user id
   // 4) get user profile based on the user id

@@ -30,3 +30,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWls
     "email" : "user3@gmail.com",
     "password" : "hsu123456"
 }
+
+### GET refresh tokens
+GET http://127.0.0.1/v1/user/login
+Authorization: : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI0QGdtYWlsLmNvbSIsImlhdCI6MTYxODIzNzQ0MCwiZXhwIjoxNjE4MjM4MzQwfQ.pKzgHDhLUyRyRmp1HOwPN7TTPhW4c7JYWzpjrLJjCRY
