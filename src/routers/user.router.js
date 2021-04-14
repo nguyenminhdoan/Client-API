@@ -20,6 +20,9 @@ const {
   comparePassword,
 } = require("../../helpers/bcrypt.helper");
 const { json } = require("body-parser");
+const { setPasswordReset } = require("../../model/reset_pin/ResetPin.model");
+
+const { emailProcessor } = require("../../helpers/email.helper");
 
 router.all("/", (req, res, next) => {
   // res.json({
@@ -104,6 +107,33 @@ router.post("/login", async (req, res) => {
     message: "Login Successfully",
     accessJWT,
     refreshJWT,
+  });
+});
+
+// User  RESET PASSWORD
+router.post("/reset-password", async (req, res) => {
+  const { email } = req.body;
+
+  const user = await getUserByEmail(email);
+  if (user && user._id) {
+    const setPin = await setPasswordReset(email);
+    const result = await emailProcessor(email, setPin.pin);
+    
+    if (result && result.messageId) {
+      return res.json({
+        status: "success",
+        message: "We have sent the reset pin by email, please check it!!!",
+      });
+    } else {
+      return res.json({
+        status: "error",
+        message: "Unable to send email, please try later!!!",
+      });
+    }
+  }
+  return res.json({
+    status: "error",
+    message: "We have sent the reset pin by email, please check it!!!",
   });
 });
 
