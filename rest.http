@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
     "email" : "user3@gmail.com",
-    "password" : "hsu123456"
+    "password" : "hsu01123"
 }
 ### User user profile endpoint
 GET http://127.0.0.1/v1/user/login
@@ -40,7 +40,16 @@ Authorization: : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI0QGdtYW
 POST http://127.0.0.1/v1/user/reset-password
 Content-Type: application/json
 
+{
+    "email" : "user3@gmail.com",
+}
+
+### UPDATE NEW PASSWORD by using pin 
+PATCH  http://127.0.0.1/v1/user/reset-password
+Content-Type: application/json
 
 {
     "email" : "user3@gmail.com",
+    "pin" : 707816  ,
+    "newPassword" : "hsu01123"
 }
