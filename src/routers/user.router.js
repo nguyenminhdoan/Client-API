@@ -28,7 +28,13 @@ const {
 } = require("../../model/reset_pin/ResetPin.model");
 
 const { emailProcessor } = require("../../helpers/email.helper");
+const {
+  resetPasswordReqValid,
+  updatePasswordReqValid,
+} = require("../../middlewares/formValidation.middleware");
 
+
+// ######################## END IMPORT MODULE ################################33
 router.all("/", (req, res, next) => {
   // res.json({
   //   message: "this message is from user router",
@@ -115,7 +121,7 @@ router.post("/login", async (req, res) => {
 });
 
 // User  RESET PASSWORD
-router.post("/reset-password", async (req, res) => {
+router.post("/reset-password", resetPasswordReqValid, async (req, res) => {
   const { email } = req.body;
 
   const user = await getUserByEmail(email);
@@ -145,7 +151,7 @@ router.post("/reset-password", async (req, res) => {
   });
 });
 
-router.patch("/reset-password", async (req, res) => {
+router.patch("/reset-password", updatePasswordReqValid, async (req, res) => {
   const { email, pin, newPassword } = req.body;
   console.log(email, pin);
   const getPin = await getPinByEmail(email, pin);
