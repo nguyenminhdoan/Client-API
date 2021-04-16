@@ -50,6 +50,13 @@ Content-Type: application/json
 
 {
     "email" : "user3@gmail.com",
-    "pin" : 707816  ,
+    "pin" : 684613   ,
     "newPassword" : "hsu01123"
 }
+
+
+
+### LOG OUT endpoints
+DELETE   http://127.0.0.1/v1/user/logout
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTYxODU5MjAxMiwiZXhwIjoxNjE4NTkzODEyfQ.yqYLDB-1CbumaQr2ojt1O81QqdPs7KOMjF-R8xlPjWc
+

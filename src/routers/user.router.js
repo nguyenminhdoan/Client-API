@@ -5,6 +5,7 @@ const {
   getUserByEmail,
   getUserById,
   updateNewPassword,
+  storeUserRefreshJWT,
 } = require("../../model/user/User.model");
 const {
   createAccessJWT,
@@ -33,6 +34,7 @@ const {
   updatePasswordReqValid,
 } = require("../../middlewares/formValidation.middleware");
 
+const { deleteJWT } = require("../../helpers/redis.helper");
 
 // ######################## END IMPORT MODULE ################################33
 router.all("/", (req, res, next) => {
@@ -133,21 +135,16 @@ router.post("/reset-password", resetPasswordReqValid, async (req, res) => {
       type: "request-new-password",
     });
 
-    if (result && result.messageId) {
-      return res.json({
-        status: "success",
-        message: "We have sent the reset pin by email, please check it!!!",
-      });
-    } else {
-      return res.json({
-        status: "error",
-        message: "Unable to send email, please try later!!!",
-      });
-    }
+    result && result.messageId;
+    return res.json({
+      status: "success",
+      message:
+        "We have sent the reset pin by email, please check your email!!!",
+    });
   }
   return res.json({
     status: "error",
-    message: "We have sent the reset pin by email, please check it!!!",
+    message: "We have sent the reset pin by email, please check your email!!!",
   });
 });
 
@@ -179,5 +176,22 @@ router.patch("/reset-password", updatePasswordReqValid, async (req, res) => {
       });
     }
   }
+});
+
+router.delete("/logout", userAuthorization, async (req, res) => {
+  const { authorization } = req.headers;
+  // this data coming from db
+  const _id = req.userId;
+  // delete accessJWT from redis db
+  deleteJWT(authorization);
+
+  //delete refresh token from mongodb
+  const result = await storeUserRefreshJWT(_id, "");
+
+  if (result._id) {
+    return res.json({ status: "success", message: "Logged out successfully" });
+  }
+
+  res.json({ status: "error", message: "cannot log out, please try later" });
 });
 module.exports = router;
