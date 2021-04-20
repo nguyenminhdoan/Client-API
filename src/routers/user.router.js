@@ -150,7 +150,6 @@ router.post("/reset-password", resetPasswordReqValid, async (req, res) => {
 
 router.patch("/reset-password", updatePasswordReqValid, async (req, res) => {
   const { email, pin, newPassword } = req.body;
-  console.log(email, pin);
   const getPin = await getPinByEmail(email, pin);
 
   if (getPin._id) {
