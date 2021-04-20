@@ -60,3 +60,25 @@ Content-Type: application/json
 DELETE   http://127.0.0.1/v1/user/logout
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTYxODU5MjAxMiwiZXhwIjoxNjE4NTkzODEyfQ.yqYLDB-1CbumaQr2ojt1O81QqdPs7KOMjF-R8xlPjWc
 
+################# ticket ######
+
+### CREATE new ticket endpoints
+POST    http://127.0.0.1/v1/ticket
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTYxODU5MjAxMiwiZXhwIjoxNjE4NTkzODEyfQ.yqYLDB-1CbumaQr2ojt1O81QqdPs7KOMjF-R8xlPjWc
+
+
+{
+    "subject" : "user3@gmail.com",
+    "sender" : "duc huy",
+    "message" : "this is test message22 from minh doan user" 
+}
+
+### GET ALL TICKET INFORMATION
+GET    http://127.0.0.1/v1/ticket
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTYxODU5MjAxMiwiZXhwIjoxNjE4NTkzODEyfQ.yqYLDB-1CbumaQr2ojt1O81QqdPs7KOMjF-R8xlPjWc
+
+
+#### GET TICKET BY SPECIFIC TICKET
+GET : http://localhost:3001/v1/ticket/607e65a3ad89063970b64a5c
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTYxODU5MjAxMiwiZXhwIjoxNjE4NTkzODEyfQ.yqYLDB-1CbumaQr2ojt1O81QqdPs7KOMjF-R8xlPjWc
+ 

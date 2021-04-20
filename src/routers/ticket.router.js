@@ -5,13 +5,17 @@ const {
   userAuthorization,
 } = require("../../middlewares/authorization.middleware");
 
-const { insertTicket, getTickets } = require("../../model/ticket/Ticket.model");
+const {
+  insertTicket,
+  getTickets,
+  getTicketById,
+} = require("../../model/ticket/Ticket.model");
 
 router.all("/", (req, res, next) => {
   next();
 });
 
-// create new ticket
+// CREATE new ticket
 router.post("/", userAuthorization, async (req, res, next) => {
   try {
     const { subject, sender, message } = req.body;
@@ -46,7 +50,6 @@ router.post("/", userAuthorization, async (req, res, next) => {
 router.get("/", userAuthorization, async (req, res, next) => {
   try {
     const userId = req.userId;
-    console.log(userId);
     const result = await getTickets(userId);
 
     if (result.length) {
@@ -55,6 +58,22 @@ router.get("/", userAuthorization, async (req, res, next) => {
         result,
       });
     }
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+});
+
+// GET TICKET BY SPECIFIC TICKET
+router.get("/:_id", userAuthorization, async (req, res, next) => {
+  try {
+    const _id = req.params._id;
+    const clientId = req.userId;
+    const result = await getTicketById(_id, clientId);
+
+    return res.json({
+      status: "success",
+      result,
+    });
   } catch (error) {
     res.json({ status: "error", message: error.message });
   }
