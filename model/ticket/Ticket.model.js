@@ -13,4 +13,17 @@ const insertTicket = (ticketObj) => {
   });
 };
 
-module.exports = { insertTicket };
+// GET ALL TICKET
+const getTickets = (clientId) => {
+  return new Promise((resolve, reject) => {
+    try {
+      TicketSchema.find({ clientId })
+        .then((data) => resolve(data))
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+module.exports = { insertTicket, getTickets };
