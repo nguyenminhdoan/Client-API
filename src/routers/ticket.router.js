@@ -9,6 +9,9 @@ const {
   insertTicket,
   getTickets,
   getTicketById,
+  updateTicket,
+  closeTicket,
+  deleteTicket,
 } = require("../../model/ticket/Ticket.model");
 
 router.all("/", (req, res, next) => {
@@ -72,6 +75,75 @@ router.get("/:_id", userAuthorization, async (req, res, next) => {
 
     return res.json({
       status: "success",
+      result,
+    });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+});
+
+// UPDATE TICKET CONVERSATION
+router.put("/:_id", userAuthorization, async (req, res, next) => {
+  try {
+    const { message, sender } = req.body;
+    const _id = req.params._id;
+    const result = await updateTicket({ _id, message, sender });
+
+    if (result._id) {
+      return res.json({
+        status: "success",
+        message: "your message updated",
+        result,
+      });
+    }
+    res.json({
+      status: "error",
+      message: "failed to update please try later!!!",
+    });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+});
+
+// CLOSE TICKET CONVERSATION
+router.patch(
+  "/close-ticket/:_id",
+  userAuthorization,
+  async (req, res, next) => {
+    try {
+      const _id = req.params._id;
+      const clientId = req.userId;
+
+      const result = await closeTicket({ _id, clientId });
+
+      if (result._id) {
+        return res.json({
+          status: "success",
+          message: "your ticket closed",
+          result,
+        });
+      }
+      res.json({
+        status: "error",
+        message: "failed to update please try later!!!",
+      });
+    } catch (error) {
+      res.json({ status: "error", message: error.message });
+    }
+  }
+);
+
+// DELETE TICKET CONVERSATION
+router.delete("/:_id", userAuthorization, async (req, res, next) => {
+  try {
+    const _id = req.params._id;
+    const clientId = req.userId;
+
+    const result = await deleteTicket({ _id, clientId });
+
+    return res.json({
+      status: "success",
+      message: "your ticket deleted",
       result,
     });
   } catch (error) {
