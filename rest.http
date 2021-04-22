@@ -84,7 +84,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWls
 
 
 
-#### UPDATE TICKET
+#### UPDATE/REPLY TICKET
 PUT : http://localhost:3001/v1/ticket/607e65a3ad89063970b64a5c
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIzQGdtYWlsLmNvbSIsImlhdCI6MTYxODU5MjAxMiwiZXhwIjoxNjE4NTkzODEyfQ.yqYLDB-1CbumaQr2ojt1O81QqdPs7KOMjF-R8xlPjWc
  
